@@ -21,5 +21,10 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "escape-string-regexp": "^1.0.5",
+    "google-maps-react": "^2.0.2",
+    "sort-by": "^1.2.0"
+  }
 }
