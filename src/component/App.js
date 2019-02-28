@@ -33,20 +33,21 @@ class App extends Component {
     var selected = event.target.value
     this.setState({
       filter:selected,
-      clickedList:''
+      clickedList:'',
+      mouseOvered:''
     })
   }
 
   onInputChange = (event)=>{
     this.setState({
       query:event.target.value,
-      clickedList:''
+      clickedList:'',
+      mouseOvered:''
     })
   }
 
   onMouseOverList = (event)=>{
-    this.setState({mouseOvered:event.target.id})
-  //  return event.target.id
+    this.setState({mouseOvered:event.currentTarget.id})
   }
 
   onMouseOutList =()=>{
@@ -54,35 +55,22 @@ class App extends Component {
   }
 
   onClickedList = (event) =>{
-    this.setState({clickedList:event.target.id})
+    this.setState({clickedList:event.currentTarget})
   }
 
-  openNav=()=>{
-    document.querySelector('.menu').style.width='250px'
-    document.querySelector('main').style.marginLeft = "250px"
-    document.querySelector('.title').style.marginLeft = "250px"
+  toggleNav=()=>{
+    document.querySelector('.app').classList.toggle('openNav')
   }
-
-  closeNav=()=>{
-    document.querySelector('.menu').style.width='0'
-    document.querySelector('main').style.marginLeft = "0"
-    document.querySelector('.title').style.marginLeft = "0"
-  }
-
-
 
   render() {
-  //  var mouseOvered = this.onMouseOverList()
     return (
       <div className ='app'>
-      {console.log(this.state)}
         <header>
-          <div className = 'menuIcon' onClick ={this.openNav}></div>
+          <div className = 'menuIcon' onClick ={this.toggleNav}></div>
           <h2 className ='title'>Best Food in Bay Area</h2>
         </header>
 
-        <nav className='menu hidden'>
-          <span className="closebtn" onClick={this.closeNav}>&times;</span>
+        <nav className='menu'>
             <Nav
             restaurants = {this.state.restaurants}
             onCategoryChange = {this.onCategoryChange}

@@ -2,28 +2,58 @@ html, body{
   height: 100%;
   margin: 0;
   padding: 0;
-}
-#map {
-  width:100%;
-  height:87vh;
-  position: absolute;
-  transition: margin-left .5s;
+  font-family:monospace;
+  overflow-y: hidden;
 }
 
-/*---------For Menu and Nav*/
+/*-----------Header-----------*/
+header{
+  height: 3em;
+  padding-top:2em;
+  padding-bottom: 1em;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
+}
+
+.title{
+  display:block;
+  text-align: center;
+  margin:auto;
+  color:#b61441;
+  font-size: 2em;
+  font-family: fantasy;
+}
+
 .menuIcon {
   display: table-cell;
   background-image: url('./icons/menu-icon.svg');
-  width:35px;
-  height: 35px;
-  z-index: 1;
+  width:2em;
+  height: 2em;
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  left:1em;
+  top:0.5em;
   position: relative;
-  margin: 10px;
-  top:33px;
-  left:10px
+}
+
+/*--------When Open Nav*-----------*/
+.openNav .menu{
+  width:250px;
+}
+.openNav main, .openNav header{
+  margin-left: 250px;
+}
+.openNav #map, .openNav #map{
+  width:calc(100% - 250px);
+}
+.openNav .menuIcon{
+  background-image: url('./icons/close-icon.svg');
+  left:0;
+  top:-2em;
 }
 
 .menu{
@@ -35,29 +65,122 @@ html, body{
   left: 0;
   background-color: white;
   overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
-.menu .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 50px;
-  margin-left: 50px;
+
+.menu-list{
+  position:absolute;
+  font-size: 1em;
+  padding-top:1em;
+}
+.user-choose{
+  display: flex;
+  flex-wrap: wrap;
+  position: sticky;
+  top:0;
+  z-index: 11;
+}
+.select, .input{
+  font-family: monospace;
+  height: 4em;
+  border-radius:3px;
+  background:#f3f3f3 30%;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,0.2),inset 0 1px 0 1px #fff,0 1px 2px rgba(0,0,0,0.15);
 }
 
-.title{
-  margin:auto;
-  text-align: center;
+.select{
+  width:25%;
+}
+.input{
+  width:74%;
+}
+.input:hover{
+  background: white;
+}
+
+.select #categorySelector, .input #nameSelector{
+  height: 100%;
+  margin-bottom:0;
+  border:0;
+  background:transparent;
+  border-radius:3px;
+  color:#666;
+  width:100%;
+}
+
+.input #nameSelector{
+  width: 95%;
+  padding-left: 5%;
+}
+
+.result-list{
+  height: calc(100% - 10em);
   position: relative;
 }
-header{
-  margin-bottom: 3vh;
-  height: 10vh;
+.result-list ul{
+  list-style: none;
+  padding-left: 0;
+}
+.result-list ul li{
+  padding-left: 1em;
+  padding-right: 1em;
+  height: 4em;
+  background: white;
+  display: flex;
+/*  border: 1px solid #d5d8df;*/
+  border-radius: 4px;
+  cursor:pointer;
+  width:88%;
+}
+.result-list ul li:hover{
+  background:linear-gradient(white, #f1abed, white);
+}
+.result-list ul li:hover .labelNumber{
+  background-color: white;
+}
+.labelNumber{
+  background-color: #f1abed;
+  padding:5px;
+  margin-top: 1em;
+  border-radius: 1.5em;
+  text-align: center;
+  height:1.5em;
+  width:1.5em;
+}
+.restaurantName{
+  padding-left: 1em;
+  padding-top:0.3em;
 }
 
-.infoWindow{
-  height: 100px;
-  width: 100px;
-  z-index: 15;
+/*-----------map--------*/
+main{
+  width:100%;
+  height: calc(100vh - 6em);
+  border: 2px solid #d5d8df;
+  transition: margin-left .5s;
+}
+#map {
+  width:100%;
+  height:calc(100% - 6em);
+  position: absolute;
+  transition: margin-left .5s;
+}
+
+.info_link{
+  text-decoration: none;
+  font-size:1.5em;
+  color:#816bed;
+  font-weight: bold;
+}
+
+.info_category{
+  border-radius: 0.1em;
+  border: 1px solid #f2c7f0;
+  background-color: #f1abed;
+  display:table-cell;
+  font-weight: normal;
+  box-shadow: 1px 1px 1px 0px rgba(158,129,157,1);
+}
+.info_address{
+  font-size: 1em;
 }

@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import escapeRegExp from 'escape-string-regexp';
+import escapeRegExp from 'escape-string-regexp'
 
 export class MapContainer extends Component {
 
   state ={
     activeMarker:{},
     selectedPlace:{},
-    showingInfo:false
+    showingInfo:false,
+    userClick:''
   }
 
   componentDidMount(){
@@ -16,20 +17,30 @@ export class MapContainer extends Component {
 
   onMapClick = (props)=>{
     if(this.state.showingInfo){
+      // set icon to default when click on the map
+      if(this.state.userClick){
+        this.state.userClick.setIcon(null)
+      }
       this.setState({
         showingInfo:false,
-        activeMarker:null
+        activeMarker:null,
+        userClick:''
       })
     }
   }
 
   onMarkerClick = (props,marker,e)=>{
   //  e.preventDefault()
+    if((this.state.userClick)&&this.state.userClick.title!== marker.title){// when user change another marker to click
+      this.state.userClick.setIcon(null) // change back the previous clicked mark icon
+    }
     this.setState({
       activeMarker:marker,
       selectedPlace:props,
-      showingInfo:true
+      showingInfo:true,
+      userClick:marker
     })
+    marker.setIcon(this.iconMaker("http://icons.iconarchive.com/icons/icons-land/vista-map-markers/48/Map-Marker-Marker-Inside-Pink-icon.png"))
   }
 
   onMouseoverMarker=(props,marker,e)=>{
@@ -38,7 +49,9 @@ export class MapContainer extends Component {
   }
 
   onMouseoutMarker=(props,marker,e)=>{
-    marker.setIcon(null)
+    if(marker.title !== this.state.userClick.title){
+      marker.setIcon(null)
+    }
   }
 
   iconMaker=(url)=>{
@@ -50,9 +63,19 @@ export class MapContainer extends Component {
     return icon
   }
 
+  onCloseInfowindow=()=>{
+    this.setState({
+      showingInfo:false,
+      activeMarker:null,
+      userClick:''
+    })
+  }
+
+
   render() {
+
     const { restaurants,filter,query, google ,clickedList,mouseOvered} = this.props
-    const { activeMarker, selectedPlace, showingInfo} = this.state
+    const { activeMarker, selectedPlace, showingInfo,userClick} = this.state
 
     var showingRestaurants;
 
@@ -72,7 +95,11 @@ export class MapContainer extends Component {
     }
 
     if(clickedList){
-      showingRestaurants = restaurants.filter(res=> res.id.toString() === clickedList)
+       showingRestaurants = restaurants.filter(res=> res.id.toString() === clickedList.id)
+    }
+    // handle when no corresponding result
+    if(showingRestaurants.length === 0){
+      showingRestaurants = restaurants
     }
 
     var bounds = new google.maps.LatLngBounds();
@@ -82,21 +109,31 @@ export class MapContainer extends Component {
                                          showingRestaurants[i].properties.Location["Geo Coordinates"].Longitude)
       bounds.extend(point)
     }
+
+    if(showingRestaurants.length ===1){
+      var bounds2= new google.maps.LatLngBounds()
+      bounds2.extend(new google.maps.LatLng(showingRestaurants[0].properties.Location["Geo Coordinates"].Latitude+0.05,
+                                           showingRestaurants[0].properties.Location["Geo Coordinates"].Longitude+0.05))
+      bounds2.extend(new google.maps.LatLng(showingRestaurants[0].properties.Location["Geo Coordinates"].Latitude-0.05,
+                                           showingRestaurants[0].properties.Location["Geo Coordinates"].Longitude-0.05))
+    }
+
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    var labelIndex = 0;
 
     return (
       <Map
         google={google}
-        bounds={bounds}
+        bounds = {showingRestaurants.length===1? bounds2:bounds}
+        zoon ={10}
         onClick = {this.onMapClick}
         >
-        {console.log(showingRestaurants,mouseOvered)}
+        {(clickedList)&&(clickedList.dataset)&&console.log(clickedList.dataset.label)}
         {showingRestaurants.map((restaurant,index) => (
-        ((mouseOvered)&&(restaurant.id.toString()===mouseOvered))?<Marker
+        (((userClick)&&(userClick.title === restaurant.properties.Title))||
+        ((mouseOvered)&&(restaurant.id.toString()===mouseOvered)))?<Marker
                   key = {restaurant.id}
                   title ={restaurant.properties.Title}
-                  label = {labels[labelIndex++ % labels.length]}
+                  label={labels[index % labels.length]}
                   position ={new google.maps.LatLng(restaurant.properties.Location["Geo Coordinates"].Latitude,
                                                      restaurant.properties.Location["Geo Coordinates"].Longitude)}
                   onClick = {this.onMarkerClick}
@@ -109,7 +146,7 @@ export class MapContainer extends Component {
         <Marker
           key = {restaurant.id}
           title ={restaurant.properties.Title}
-          label = {labels[labelIndex++ % labels.length]}
+          label={labels[index % labels.length]}
           position ={new google.maps.LatLng(restaurant.properties.Location["Geo Coordinates"].Latitude,
                                              restaurant.properties.Location["Geo Coordinates"].Longitude)}
           //animation= {google.maps.Animation.DROP}
@@ -126,11 +163,12 @@ export class MapContainer extends Component {
           className = 'infoWindow'
           marker = {activeMarker}
           visible = {showingInfo}
+          onClose = {this.onCloseInfowindow}
           >
           <div>
-            <a href = {selectedPlace.URL}>{selectedPlace.title}</a>
-            <div className = 'category_block'>{selectedPlace.category}</div>
-            <span>{selectedPlace.address}</span>
+            <a className = 'info_link'href = {selectedPlace.URL}>{selectedPlace.title}</a>
+            <div className = 'info_category'>{selectedPlace.category}</div>
+            <span className = 'info_address'>{selectedPlace.address}</span>
           </div>
         </InfoWindow>
 

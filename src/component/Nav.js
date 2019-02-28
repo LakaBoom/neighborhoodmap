@@ -26,44 +26,52 @@ class Nav extends Component{
 
    showingRestaurants.sort(sortBy('properties.Title'))
 
+   var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     return(
-      <div>
-        <div>
-          <label htmlFor = 'categorySelector'></label>
-            <select id='categorySelector' onChange = {onCategoryChange}>
-              <option value = 'All Category' placeholder = 'All Category'>All Category</option>
-              <option value = 'Dining'> Dining </option>
-              <option value = 'Hotpot'> Hotpot </option>
-              <option value = 'BBQ'>BBQ</option>
-              <option value ='Noodle'>Noodle</option>
-              <option value = 'Desert & Drinks'> Desert & Drinks</option>
-            </select>
-            <label htmlFor="nameSelector"></label>
-              <input
-                id="nameSelector"
-                type = 'text'
-                value = {query}
-                onChange={onInputChange}/>
-              <button onSubmit = {this.onQuerySubmit}>Submit</button>
-                {(showingRestaurants.length === 0)&&
-                  (<div> Not found related restaurants.</div>)}
-                <ul>
-                  {showingRestaurants.map(res=>
-                    <li
-                    className = 'restaurant-list'
-                    id = {res.id}
-                    key = {res.id}
-                    onMouseOver = {onMouseOverList}
-                    onMouseOut = {onMouseOutList}
-                    onClick ={onClickedList}>
-                      {res.properties.Title}
-                    </li>
-                  )}
-                </ul>
+      <div className = 'menu-list'>
+        <div className ='user-choose'>
+          <div className = 'select'>
+            <label htmlFor = 'categorySelector'></label>
+              <select id='categorySelector' onChange = {onCategoryChange}>
+                <option value = 'All Category' placeholder = 'All Category'>All Category</option>
+                <option value = 'Dining'> Dining </option>
+                <option value = 'Hotpot'> Hotpot </option>
+                <option value = 'BBQ'>BBQ</option>
+                <option value ='Noodle'>Noodle</option>
+                <option value = 'Desert & Drinks'> Desert & Drinks</option>
+              </select>
+            </div>
+            <div className = 'input'>
+              <label htmlFor="nameSelector"></label>
+                <input
+                  id="nameSelector"
+                  type = 'text'
+                  placeholder ='Restaurant Name'
+                  value = {query}
+                  onChange={onInputChange}/>
+            </div>
           </div>
-      </div>
 
-
+          <div className='result-list'>
+              {(showingRestaurants.length === 0)&&
+                (<p> Not found related restaurants.</p>)}
+              <ul>
+                {showingRestaurants.map((res,index)=>
+                  <li
+                  className = 'restaurant-list'
+                  data-label = {labels[index % labels.length]}
+                  id = {res.id}
+                  key = {res.id}
+                  onMouseOver = {onMouseOverList.bind(this)}
+                  onMouseOut = {onMouseOutList.bind(this)}
+                  onClick={onClickedList.bind(this)}>
+                    <span  className= 'labelNumber'>{labels[index % labels.length]}</span>
+                    <p className= 'restaurantName'>{res.properties.Title}</p>
+                  </li>
+                )}
+              </ul>
+            </div>
+        </div>
     )
   }
 }

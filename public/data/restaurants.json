@@ -286,7 +286,7 @@
       "Google Maps URL" : "http://maps.google.com/?cid=14312364191071937175",
       "Location" : {
         "Address" : "929 A Edgewater Boulevard, Foster City, CA 94404, United States",
-        "Business Name" : "Fashion Wok-Foster City Restaurant",
+        "Business Name" : "Fashion Wok Foster City",
         "Country Code" : "US",
         "Geo Coordinates" : {
           "Latitude" : "37.5452648",
@@ -294,7 +294,7 @@
         }
       },
       "Published" : "2019-02-22T07:58:03Z",
-      "Title" : "Fashion Wok-Foster City Restaurant",
+      "Title" : "Fashion Wok Foster City",
       "Updated" : "2019-02-22T07:58:03Z"
     },
     "type" : "Feature"
