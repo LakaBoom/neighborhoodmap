@@ -47,6 +47,11 @@ class App extends Component {
   }
 
   onMouseOverList = (event)=>{
+    if(this.state.clickedList.id!== event.currentTarget.id){
+      this.setState({
+        clickedList:''
+      })
+    }
     this.setState({mouseOvered:event.currentTarget.id})
   }
 

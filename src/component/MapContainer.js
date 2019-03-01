@@ -49,8 +49,14 @@ export class MapContainer extends Component {
   }
 
   onMouseoutMarker=(props,marker,e)=>{
-    if(marker.title !== this.state.userClick.title){
-      marker.setIcon(null)
+    if(this.props.clickedList){
+      if(this.props.clickedList.dataset.title!== marker.title){
+        marker.setIcon(null)
+      }
+    }else{
+      if(marker.title !== this.state.userClick.title){
+        marker.setIcon(null)
+      }
     }
   }
 
@@ -127,13 +133,12 @@ export class MapContainer extends Component {
         zoon ={10}
         onClick = {this.onMapClick}
         >
-        {(clickedList)&&(clickedList.dataset)&&console.log(clickedList.dataset.label)}
         {showingRestaurants.map((restaurant,index) => (
         (((userClick)&&(userClick.title === restaurant.properties.Title))||
-        ((mouseOvered)&&(restaurant.id.toString()===mouseOvered)))?<Marker
+        ((mouseOvered)&&(restaurant.id.toString()===mouseOvered))||(clickedList))?<Marker
                   key = {restaurant.id}
                   title ={restaurant.properties.Title}
-                  label={labels[index % labels.length]}
+                  label={((clickedList)&&(clickedList.dataset))?clickedList.dataset.label:labels[index % labels.length]}
                   position ={new google.maps.LatLng(restaurant.properties.Location["Geo Coordinates"].Latitude,
                                                      restaurant.properties.Location["Geo Coordinates"].Longitude)}
                   onClick = {this.onMarkerClick}
@@ -146,7 +151,7 @@ export class MapContainer extends Component {
         <Marker
           key = {restaurant.id}
           title ={restaurant.properties.Title}
-          label={labels[index % labels.length]}
+          label={((clickedList)&&(clickedList.dataset))?clickedList.dataset.label:labels[index % labels.length]}
           position ={new google.maps.LatLng(restaurant.properties.Location["Geo Coordinates"].Latitude,
                                              restaurant.properties.Location["Geo Coordinates"].Longitude)}
           //animation= {google.maps.Animation.DROP}

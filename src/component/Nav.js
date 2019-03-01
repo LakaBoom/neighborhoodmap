@@ -62,6 +62,7 @@ class Nav extends Component{
                   data-label = {labels[index % labels.length]}
                   id = {res.id}
                   key = {res.id}
+                  data-title = {res.properties.Title}
                   onMouseOver = {onMouseOverList.bind(this)}
                   onMouseOut = {onMouseOutList.bind(this)}
                   onClick={onClickedList.bind(this)}>
