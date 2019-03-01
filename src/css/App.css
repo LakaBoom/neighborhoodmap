@@ -19,6 +19,7 @@ header{
 }
 
 .title{
+  order:2;
   display:block;
   text-align: center;
   margin:auto;
@@ -28,6 +29,7 @@ header{
 }
 
 .menuIcon {
+  order:1;
   display: table-cell;
   background-image: url('./icons/menu-icon.svg');
   width:2em;
@@ -42,7 +44,12 @@ header{
 
 /*--------When Open Nav*-----------*/
 .openNav .menu{
+  display: block;
   width:250px;
+  height:100%;
+  z-index:11;
+  left:0;
+  overflow-y: scroll;
 }
 .openNav main, .openNav header{
   margin-left: 250px;
@@ -56,16 +63,21 @@ header{
   top:-2em;
 }
 
+label{
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+}
+
 .menu{
-  height: 100%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 11; /* Stay on top */
+  display: none;
+  height: 1px; /* 100% Full-height */
+  width: 1px; /* 0 width - change this with JavaScript */
+  position: absolute;; /* Stay in place */
   top: 0; /* Stay at the top */
   left: 0;
   background-color: white;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  overflow: hidden; /* Disable horizontal scroll */
+  transition: 0.3s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
 .menu-list{
@@ -163,13 +175,13 @@ main{
   width:100%;
   height: calc(100vh - 6em);
   border: 2px solid #d5d8df;
-  transition: margin-left .5s;
+  transition: margin-left .3s;
 }
 #map {
   width:100%;
   height:calc(100% - 6em);
   position: absolute;
-  transition: margin-left .5s;
+  transition: margin-left .3s;
 }
 
 .info_link{
@@ -247,4 +259,23 @@ main{
   .openNav #map{
     width:100%;
   }
+}
+
+/*------no found page *---------*/
+.noDataPage{
+  margin-left: auto;
+  margin-right:auto;
+  margin-top: 10vh;
+  width: 80%;
+  height:50vh;
+  position: relative;
+  text-align: center;
+  padding: 1em;
+  background-image: url('./icons/404.svg');
+  background-size:50%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+.noDataPage div{
+  font-size: 1.5em;
 }

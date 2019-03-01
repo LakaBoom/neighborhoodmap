@@ -6,4 +6,9 @@ const headers = {
 export const getAll = () =>
   fetch(database_URL, { headers })
     .then(res => res.json())
-    .then(data => data.restaurants)
+    .catch(err => {
+          document.querySelector('.app').innerHTML = `<div class = 'noDataPage'>
+                                                      <div> Not able to fetch data :( </div>
+                                                      <p> error: ${err} </p>
+                                                      </div>`
+      })

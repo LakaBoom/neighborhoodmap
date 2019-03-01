@@ -3,7 +3,6 @@ import escapeRegExp from 'escape-string-regexp';
 import sortBy from 'sort-by';
 
 class Nav extends Component{
-
   render(){
     const {query,filter, restaurants,onCategoryChange, onInputChange, onMouseOverList, onMouseOutList, onClickedList} = this.props
 
@@ -28,10 +27,10 @@ class Nav extends Component{
 
    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     return(
-      <div className = 'menu-list'>
+      <div role='menubar' className = 'menu-list'>
         <div className ='user-choose'>
           <div className = 'select'>
-            <label htmlFor = 'categorySelector'></label>
+            <label htmlFor = 'categorySelector'>Select a Category</label>
               <select id='categorySelector' onChange = {onCategoryChange}>
                 <option value = 'All Category' placeholder = 'All Category'>All Category</option>
                 <option value = 'Dining'> Dining </option>
@@ -42,8 +41,9 @@ class Nav extends Component{
               </select>
             </div>
             <div className = 'input'>
-              <label htmlFor="nameSelector"></label>
+              <label htmlFor="nameSelector">Type the name of restaurant</label>
                 <input
+                  role ='search'
                   id="nameSelector"
                   type = 'text'
                   placeholder ='Restaurant Name'
@@ -54,7 +54,7 @@ class Nav extends Component{
 
           <div className='result-list'>
               {(showingRestaurants.length === 0)&&
-                (<p className ='notFoundResult'> Not found related restaurants.</p>)}
+                (<p className ='notFoundResult' tabIndex = '0'> Not found related restaurants.</p>)}
               <ul>
                 {showingRestaurants.map((res,index)=>
                   <li
@@ -62,12 +62,13 @@ class Nav extends Component{
                   data-label = {labels[index % labels.length]}
                   id = {res.id}
                   key = {res.id}
+                  tabIndex='0'
                   data-title = {res.properties.Title}
                   onMouseOver = {onMouseOverList.bind(this)}
                   onMouseOut = {onMouseOutList.bind(this)}
                   onClick={onClickedList.bind(this)}>
                     <span  className= 'labelNumber'>{labels[index % labels.length]}</span>
-                    <p className= 'restaurantName'>{res.properties.Title}</p>
+                    <p className= 'restaurantName' >{res.properties.Title}</p>
                   </li>
                 )}
               </ul>

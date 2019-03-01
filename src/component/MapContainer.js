@@ -135,8 +135,6 @@ export class MapContainer extends Component {
       <Map
         google={google}
         bounds = {bounds}
-        //zoom = {10}
-        //initialCenter={{lat:37.4850667,lng:-122.2162914}}
         restriction= {{
             latLngBounds: BAY_AREA_BOUNDS,
             strictBounds: false}}

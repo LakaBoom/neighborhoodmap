@@ -21,12 +21,13 @@ class App extends Component {
 
   updateState = ()=>{
     RestaurantAPI.getAll()
+    .then(data=>data.restaurants)
     .then(tempRestaurants =>{
       this.setState({
         restaurants:tempRestaurants
       })
     })
-    .catch(err => console.log("Could not fetch the data :("))
+    .catch(error=>console.log(error))
   }
 
   onCategoryChange = (event)=>{
@@ -34,7 +35,8 @@ class App extends Component {
     this.setState({
       filter:selected,
       clickedList:'',
-      mouseOvered:''
+      mouseOvered:'',
+      query:''
     })
   }
 
@@ -65,17 +67,23 @@ class App extends Component {
 
   toggleNav=()=>{
     document.querySelector('.app').classList.toggle('openNav')
+    document.querySelector('.menuIcon').classList.toggle('closeIcon')
+    if(document.querySelector('.menuIcon').classList.contains('closeIcon')){
+      document.querySelector('.closeIcon').setAttribute('aria-label','close')
+    }else{
+      document.querySelector('.menuIcon').setAttribute('aria-label','menu')
+    }
   }
 
   render() {
     return (
       <div className ='app'>
         <header>
-          <div className = 'menuIcon' onClick ={this.toggleNav}></div>
-          <h2 className ='title'>Best Food in Bay Area</h2>
+          <h1  className ='title' tabIndex='0'>Best Food in Bay Area</h1>
+          <div className = 'menuIcon' tabIndex='0' aria-label='menu' onClick ={this.toggleNav}></div>
         </header>
 
-        <nav className='menu'>
+        <nav role='navigation' tabIndex='0' className='menu'>
             <Nav
             restaurants = {this.state.restaurants}
             onCategoryChange = {this.onCategoryChange}
@@ -89,8 +97,8 @@ class App extends Component {
             />
           </nav>
 
-        <main>
-          <div id='map'>
+        <main role='main'>
+          <div role='application' id='map'>
             <Map restaurants = {this.state.restaurants}
                   filter = {this.state.filter}
                   query = {this.state.query}
