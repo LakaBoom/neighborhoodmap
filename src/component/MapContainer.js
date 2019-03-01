@@ -116,21 +116,30 @@ export class MapContainer extends Component {
       bounds.extend(point)
     }
 
-    if(showingRestaurants.length ===1){
-      var bounds2= new google.maps.LatLngBounds()
-      bounds2.extend(new google.maps.LatLng(showingRestaurants[0].properties.Location["Geo Coordinates"].Latitude+0.05,
-                                           showingRestaurants[0].properties.Location["Geo Coordinates"].Longitude+0.05))
-      bounds2.extend(new google.maps.LatLng(showingRestaurants[0].properties.Location["Geo Coordinates"].Latitude-0.05,
-                                           showingRestaurants[0].properties.Location["Geo Coordinates"].Longitude-0.05))
+    if (bounds.getNorthEast().equals(bounds.getSouthWest())){
+      bounds.extend(new google.maps.LatLng(bounds.getNorthEast().lat()+0.03,
+                                           bounds.getNorthEast().lng()+0.03))
+      bounds.extend(new google.maps.LatLng(bounds.getNorthEast().lat()-0.03,
+                                           bounds.getNorthEast().lng()-0.03))
     }
 
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var BAY_AREA_BOUNDS = {
+             north: 37.71,
+             south: 37.28,
+             west: -122.52,
+             east: -121.94,
+           };
 
     return (
       <Map
         google={google}
-        bounds = {showingRestaurants.length===1? bounds2:bounds}
-        zoon ={10}
+        bounds = {bounds}
+        //zoom = {10}
+        //initialCenter={{lat:37.4850667,lng:-122.2162914}}
+        restriction= {{
+            latLngBounds: BAY_AREA_BOUNDS,
+            strictBounds: false}}
         onClick = {this.onMapClick}
         >
         {showingRestaurants.map((restaurant,index) => (

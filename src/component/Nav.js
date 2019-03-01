@@ -54,7 +54,7 @@ class Nav extends Component{
 
           <div className='result-list'>
               {(showingRestaurants.length === 0)&&
-                (<p> Not found related restaurants.</p>)}
+                (<p className ='notFoundResult'> Not found related restaurants.</p>)}
               <ul>
                 {showingRestaurants.map((res,index)=>
                   <li

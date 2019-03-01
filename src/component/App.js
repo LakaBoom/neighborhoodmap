@@ -26,7 +26,7 @@ class App extends Component {
         restaurants:tempRestaurants
       })
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log("Could not fetch the data :("))
   }
 
   onCategoryChange = (event)=>{
