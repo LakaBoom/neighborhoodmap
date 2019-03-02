@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import escapeRegExp from 'escape-string-regexp'
+import placeholder from '../css/icons/placeholder.svg'
 
 export class MapContainer extends Component {
 
@@ -40,11 +41,11 @@ export class MapContainer extends Component {
       showingInfo:true,
       userClick:marker
     })
-    marker.setIcon(this.iconMaker("http://icons.iconarchive.com/icons/icons-land/vista-map-markers/48/Map-Marker-Marker-Inside-Pink-icon.png"))
+    marker.setIcon(this.iconMaker(placeholder))
   }
 
   onMouseoverMarker=(props,marker,e)=>{
-    var highlightedIcon = this.iconMaker("http://icons.iconarchive.com/icons/icons-land/vista-map-markers/48/Map-Marker-Marker-Inside-Pink-icon.png")
+    var highlightedIcon = this.iconMaker(placeholder)
     marker.setIcon(highlightedIcon)
   }
 
@@ -152,7 +153,7 @@ export class MapContainer extends Component {
                   address = {restaurant.properties.Location.Address}
                   category = {restaurant.category}
                   URL = {restaurant.properties["Google Maps URL"]}
-                  icon = {this.iconMaker("http://icons.iconarchive.com/icons/icons-land/vista-map-markers/48/Map-Marker-Marker-Inside-Pink-icon.png")}
+                  icon = {this.iconMaker(placeholder)}
                   onMouseover={this.onMouseoverMarker}
                   onMouseout ={this.onMouseoutMarker}/>:
         <Marker
@@ -190,5 +191,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyD4tnh6ycktKrrrZtZTlNdg7tulQih4r84'
+  apiKey: 'AIzaSyD_IBcj1SARmEqoebgGG8z92lBw3EEdgz4'
 })(MapContainer)

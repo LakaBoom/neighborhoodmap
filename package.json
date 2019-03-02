@@ -25,6 +25,7 @@
   "devDependencies": {
     "escape-string-regexp": "^1.0.5",
     "google-maps-react": "^2.0.2",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "sw-precache": "^5.2.1"
   }
 }
