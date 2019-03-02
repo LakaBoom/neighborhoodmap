@@ -1,68 +1,52 @@
+#Neighborhood Map React project
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+##Overview
 
-In the project directory, you can run:
+This app is the map that displaying all the restaurants that I like in Bay Area, also recommend you these restaurants.
+
+## Installment
+
+  `npm install --save-dev google-maps-react escape-string-regexp sort-by sw-precache`
+
+###Dependencies
+
+  `google-maps-react`
+  `sw-precache`
+  `sort-by`
+  `escape-string-regexp`
+
+
+## Run scripts  
 
 ### `npm start`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
+### `npm run-script build && sw-precache --config=sw-precache-config.js`
 
 Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+##API used
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Google Maps API for the Map.
 
-### `npm run eject`
+##Helped Links
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- All the icons are from https://www.flaticon.com/
+- Service worker is guided by https://medium.freecodecamp.org/how-to-customize-service-workers-with-create-react-app-4424dda6210c
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Problems met
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- When cache the google maps api, keeps showing error: Couldn't solve this problem, please give some advices.
+ > Access to fetch at 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IBcj1SARmEqoebgGG8z92lBw3EEdgz4&callback=loaderCB01551493577177&libraries=places&v=3&language=en' from origin 'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

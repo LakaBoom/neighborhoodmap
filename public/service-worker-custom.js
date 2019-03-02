@@ -20,7 +20,7 @@ var cacheURL = [
   '/main.63affbb332be0a56fcb5.hot-update.js',
   '/__get-internal-source?fileName=webpack-internal%3A%2F%2F%2F.%2Fnode_modules%2Freact-error-overlay%2Flib%2Findex.js'
   //'https://maps.googleapis.com/maps/api/staticmap?center=37.393143,-122.2181696&zoom=10&size=700x700&key=AIzaSyD_IBcj1SARmEqoebgGG8z92lBw3EEdgz4'
- //'https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IBcj1SARmEqoebgGG8z92lBw3EEdgz4&callback=loaderCB01551493577177&libraries=places&v=3&language=en'
+//  'https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IBcj1SARmEqoebgGG8z92lBw3EEdgz4&callback=loaderCB01551493577177&libraries=places&v=3&language=en'
 ]
 
 self.addEventListener('install',event=>{
