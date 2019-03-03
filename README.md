@@ -42,11 +42,6 @@ FourSquare API for get the data.
 - Service worker is guided by https://medium.freecodecamp.org/how-to-customize-service-workers-with-create-react-app-4424dda6210c
 - Get venues from FourSquare API is guided by https://www.youtube.com/watch?v=dAhMIF0fNpo&t=571s
 
-## Problems met
-
-- When cache the google maps api, keeps showing error: Couldn't solve this problem, please give some advices.
- > Access to fetch at 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IBcj1SARmEqoebgGG8z92lBw3EEdgz4&callback=loaderCB01551493577177&libraries=places&v=3&language=en' from origin 'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
-
 
 ## Learn More
 
