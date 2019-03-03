@@ -1,8 +1,8 @@
-#Neighborhood Map React project
+# Neighborhood Map React project
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-##Overview
+## Overview
 
 This app is the map that displaying all the restaurants that I like in Bay Area, also recommend you these restaurants.
 
@@ -10,7 +10,7 @@ This app is the map that displaying all the restaurants that I like in Bay Area,
 
   `npm install --save-dev google-maps-react escape-string-regexp sort-by sw-precache axios`
 
-###Dependencies
+### Dependencies
 
   `google-maps-react`
   `sw-precache`
@@ -31,12 +31,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 Builds the app for production to the `build` folder.<br>
 
-##API used
+## API used
 
 Google Maps API for the Map.
 FourSquare API for get the data.
 
-##Helped Links
+## Helped Links
 
 - All the icons are from https://www.flaticon.com/
 - Service worker is guided by https://medium.freecodecamp.org/how-to-customize-service-workers-with-create-react-app-4424dda6210c
