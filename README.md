@@ -8,7 +8,7 @@ This app is the map that displaying all the restaurants that I like in Bay Area,
 
 ## Installment
 
-  `npm install --save-dev google-maps-react escape-string-regexp sort-by sw-precache`
+  `npm install --save-dev google-maps-react escape-string-regexp sort-by sw-precache axios`
 
 ###Dependencies
 
@@ -16,6 +16,7 @@ This app is the map that displaying all the restaurants that I like in Bay Area,
   `sw-precache`
   `sort-by`
   `escape-string-regexp`
+  `axios`
 
 
 ## Run scripts  
@@ -33,11 +34,13 @@ Builds the app for production to the `build` folder.<br>
 ##API used
 
 Google Maps API for the Map.
+FourSquare API for get the data.
 
 ##Helped Links
 
 - All the icons are from https://www.flaticon.com/
 - Service worker is guided by https://medium.freecodecamp.org/how-to-customize-service-workers-with-create-react-app-4424dda6210c
+- Get venues from FourSquare API is guided by https://www.youtube.com/watch?v=dAhMIF0fNpo&t=571s
 
 ## Problems met
 

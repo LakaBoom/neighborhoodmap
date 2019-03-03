@@ -262,7 +262,7 @@ main{
 }
 
 /*------no found page *---------*/
-.noDataPage{
+.noDataPage,.noMapPage{
   margin-left: auto;
   margin-right:auto;
   margin-top: 10vh;
@@ -272,10 +272,14 @@ main{
   text-align: center;
   padding: 1em;
   background-image: url('./icons/404.svg');
-  background-size:50%;
+  background-size:30%;
   background-repeat: no-repeat;
   background-position: bottom;
 }
-.noDataPage div{
+.noMapPage{
+  width:40%;
+  height:30vh;
+}
+.noDataPage div, .noMapPage{
   font-size: 1.5em;
 }

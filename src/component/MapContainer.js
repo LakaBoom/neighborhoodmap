@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, InfoWindow,Marker, GoogleApiWrapper} from 'google-maps-react';
 import escapeRegExp from 'escape-string-regexp'
 import placeholder from '../css/icons/placeholder.svg'
 
@@ -81,7 +81,7 @@ export class MapContainer extends Component {
 
   render() {
 
-    const { restaurants,filter,query, google ,clickedList,mouseOvered} = this.props
+    const { restaurants,filter,query, google ,clickedList,mouseOvered, activeListInfo} = this.props
     const { activeMarker, selectedPlace, showingInfo,userClick} = this.state
 
     var showingRestaurants;
@@ -89,15 +89,15 @@ export class MapContainer extends Component {
     if(filter === 'All Category'){ // no category selected
       if(query){//have input
         const match = new RegExp(escapeRegExp(query),'i')
-        showingRestaurants = restaurants.filter(res=> match.test(res.properties.Title))
+        showingRestaurants = restaurants.filter(res=> match.test(res.name))
       }else{ //  no input
         showingRestaurants = restaurants
       }
     }else{// have category selected
-      showingRestaurants= restaurants.filter(res=> res.category === filter)//no input
+      showingRestaurants= restaurants.filter(res=> res.categories[0].name === filter)//no input
       if(query){ // havev input
         const match = new RegExp(escapeRegExp(query),'i')
-        showingRestaurants = showingRestaurants.filter(res=> match.test(res.properties.Title))
+        showingRestaurants = showingRestaurants.filter(res=> match.test(res.name))
       }
     }
 
@@ -112,74 +112,79 @@ export class MapContainer extends Component {
     var bounds = new google.maps.LatLngBounds();
 
     for(var i = 0; i<showingRestaurants.length; i++){
-      var point = new google.maps.LatLng(showingRestaurants[i].properties.Location["Geo Coordinates"].Latitude,
-                                         showingRestaurants[i].properties.Location["Geo Coordinates"].Longitude)
+      var point = new google.maps.LatLng(showingRestaurants[i].location.lat,
+                                         showingRestaurants[i].location.lng)
       bounds.extend(point)
     }
 
-    if (bounds.getNorthEast().equals(bounds.getSouthWest())){
-      bounds.extend(new google.maps.LatLng(bounds.getNorthEast().lat()+0.03,
-                                           bounds.getNorthEast().lng()+0.03))
-      bounds.extend(new google.maps.LatLng(bounds.getNorthEast().lat()-0.03,
-                                           bounds.getNorthEast().lng()-0.03))
-    }
+    if ((bounds.getNorthEast().lat()-bounds.getSouthWest().lat() <= 0.001) &&
+        (bounds.getNorthEast().lng() - bounds.getSouthWest().lng() <= 0.001)
+        ){
 
-    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    var BAY_AREA_BOUNDS = {
-             north: 37.71,
-             south: 37.28,
-             west: -122.52,
-             east: -121.94,
-           };
+      bounds.extend(new google.maps.LatLng(bounds.getNorthEast().lat()+0.003,
+                                           bounds.getNorthEast().lng()+0.003))
+      bounds.extend(new google.maps.LatLng(bounds.getSouthWest().lat()-0.003,
+                                           bounds.getSouthWest().lng()-0.003))
+    }
 
     return (
       <Map
         google={google}
         bounds = {bounds}
-        restriction= {{
-            latLngBounds: BAY_AREA_BOUNDS,
-            strictBounds: false}}
         onClick = {this.onMapClick}
         >
         {showingRestaurants.map((restaurant,index) => (
-        (((userClick)&&(userClick.title === restaurant.properties.Title))||
+        (((userClick)&&(userClick.title === restaurant.name))||
         ((mouseOvered)&&(restaurant.id.toString()===mouseOvered))||(clickedList))?<Marker
                   key = {restaurant.id}
-                  title ={restaurant.properties.Title}
-                  label={((clickedList)&&(clickedList.dataset))?clickedList.dataset.label:labels[index % labels.length]}
-                  position ={new google.maps.LatLng(restaurant.properties.Location["Geo Coordinates"].Latitude,
-                                                     restaurant.properties.Location["Geo Coordinates"].Longitude)}
+                  title ={restaurant.name}
+                  label={((clickedList)&&(clickedList.dataset))?clickedList.dataset.label:`${index+1}`}
+                  position ={new google.maps.LatLng(restaurant.location.lat,
+                                                     restaurant.location.lng)}
                   onClick = {this.onMarkerClick}
-                  address = {restaurant.properties.Location.Address}
-                  category = {restaurant.category}
-                  URL = {restaurant.properties["Google Maps URL"]}
+                  address = {restaurant.location.address+',' + restaurant.location.city+',' +restaurant.location.state+',' +restaurant.location.country+','+restaurant.location.postalCode}
+                  category = {restaurant.categories[0].name}
+                  URL = {(restaurant.delivery)&&(restaurant.delivery.url)?restaurant.delivery.url:'#'}
                   icon = {this.iconMaker(placeholder)}
                   onMouseover={this.onMouseoverMarker}
                   onMouseout ={this.onMouseoutMarker}/>:
         <Marker
           key = {restaurant.id}
-          title ={restaurant.properties.Title}
-          label={((clickedList)&&(clickedList.dataset))?clickedList.dataset.label:labels[index % labels.length]}
-          position ={new google.maps.LatLng(restaurant.properties.Location["Geo Coordinates"].Latitude,
-                                             restaurant.properties.Location["Geo Coordinates"].Longitude)}
-          //animation= {google.maps.Animation.DROP}
+          title ={restaurant.name}
+          label={((clickedList)&&(clickedList.dataset))?clickedList.dataset.label:`${index+1}`}
+          position ={new google.maps.LatLng(restaurant.location.lat,
+                                             restaurant.location.lng)}
           onClick = {this.onMarkerClick}
-          address = {restaurant.properties.Location.Address}
-          category = {restaurant.category}
-          URL = {restaurant.properties["Google Maps URL"]}
+          address = {restaurant.location.address+',' + restaurant.location.city+',' +restaurant.location.state+',' +restaurant.location.country+','+restaurant.location.postalCode}
+          category = {restaurant.categories[0].name}
+          URL = {(restaurant.delivery)&&(restaurant.delivery.url)?restaurant.delivery.url:'#'}
           onMouseover={this.onMouseoverMarker}
           onMouseout ={this.onMouseoutMarker}
         />
         ))}
 
         <InfoWindow
+              google={google}
+              className='infoWindow'
+              visible = {activeListInfo}
+              position = {(clickedList)?new google.maps.LatLng(clickedList.dataset.lat,clickedList.dataset.lng):undefined}
+          >
+          <div>
+            <a className = 'info_link' href = {(clickedList)?clickedList.dataset.url:'#'}>{(clickedList)?clickedList.dataset.title:'unavailable'}</a>
+            <div className = 'info_category'>{(clickedList)?clickedList.dataset.category:'unavailable'}</div>
+            <span className = 'info_address'>{(clickedList)?clickedList.dataset.address:'unavailable'}</span>
+          </div>
+        </InfoWindow>
+
+        <InfoWindow
+          google = {google}
           className = 'infoWindow'
           marker = {activeMarker}
           visible = {showingInfo}
           onClose = {this.onCloseInfowindow}
           >
           <div>
-            <a className = 'info_link'href = {selectedPlace.URL}>{selectedPlace.title}</a>
+            <a className = 'info_link' href = {selectedPlace.URL}>{selectedPlace.title}</a>
             <div className = 'info_category'>{selectedPlace.category}</div>
             <span className = 'info_address'>{selectedPlace.address}</span>
           </div>
@@ -190,6 +195,10 @@ export class MapContainer extends Component {
   }
 }
 
+const LoadingContainer = (props) => (
+  <div className = 'noMapPage'> No Internet Connection</div>
+)
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyD_IBcj1SARmEqoebgGG8z92lBw3EEdgz4'
+  apiKey: 'AIzaSyD_IBcj1SARmEqoebgGG8z92lBw3EEdgz4',
+  LoadingContainer:LoadingContainer,
 })(MapContainer)

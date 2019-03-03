@@ -11,7 +11,8 @@ class App extends Component {
     filter:'All Category',
     query:'',
     mouseOvered:'',
-    clickedList:''
+    clickedList:'',
+    activeListInfo:false //when click list, show info window
   }
 
   componentDidMount(){
@@ -21,11 +22,9 @@ class App extends Component {
 
   updateState = ()=>{
     RestaurantAPI.getAll()
-    .then(data=>data.restaurants)
-    .then(tempRestaurants =>{
-      this.setState({
-        restaurants:tempRestaurants
-      })
+    .then(res=> res.map(r=> r.venue))
+    .then(res=>{
+      this.setState({restaurants:res})
     })
     .catch(error=>console.log(error))
   }
@@ -58,11 +57,12 @@ class App extends Component {
   }
 
   onMouseOutList =()=>{
-    this.setState({mouseOvered:''})
+    this.setState({mouseOvered:'',activeListInfo:false})
   }
 
   onClickedList = (event) =>{
-    this.setState({clickedList:event.currentTarget})
+    this.setState({clickedList:event.currentTarget,
+                   activeListInfo:true})
   }
 
   toggleNav=()=>{
@@ -79,7 +79,7 @@ class App extends Component {
     return (
       <div className ='app'>
         <header>
-          <h1  className ='title' tabIndex='0'>Best Food in Bay Area</h1>
+          <h1  className ='title' tabIndex='0'>Food in Mountain View</h1>
           <div className = 'menuIcon' tabIndex='0' aria-label='menu' onClick ={this.toggleNav}></div>
         </header>
 
@@ -104,6 +104,7 @@ class App extends Component {
                   query = {this.state.query}
                   clickedList = {this.state.clickedList}
                   mouseOvered = {this.state.mouseOvered}
+                  activeListInfo = {this.state.activeListInfo}
                   />
           </div>
         </main>
