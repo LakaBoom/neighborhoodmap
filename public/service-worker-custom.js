@@ -16,14 +16,6 @@ var cacheURL = [
   '/static/media/placeholder.e0ad5d70.svg',
   '/static/js/1.chunk.js',
   '/favicon.ico',
-  '/main.63affbb332be0a56fcb5.hot-update.js',
-  '/main.d63f1c198bb65526fae9.hot-update.js',
-  '/main.606d7e7d99cfdfe54a34.hot-update.js',
-  '/__get-internal-source?fileName=webpack-internal%3A%2F%2F%2F.%2Fnode_modules%2Freact-error-overlay%2Flib%2Findex.js',
-  '/__get-internal-source?fileName=webpack-internal%3A%2F%2F%2F.%2Fsrc%2Fcomponent%2FNav.js',
-  '/__get-internal-source?fileName=webpack-internal%3A%2F%2F%2F.%2Fnode_modules%2Freact-dom%2Fcjs%2Freact-dom.development.js',
-  '/__get-internal-source?fileName=webpack-internal%3A%2F%2F%2F.%2Fnode_modules%2Freact%2Fcjs%2Freact.development.js',
-  '/__get-internal-source?fileName=webpack-internal%3A%2F%2F%2F.%2Fsrc%2Fcomponent%2FApp.js',
   'https://api.foursquare.com/v2/venues/explore?client_id=UD32LRWYYUW4Z4BJRTIIDQYYR5L4PYETWVJEJ2OKRDA324YR&client_secret=VWISQ4LN3L35QWANEP2MCZLLC442HGRHMGMRVBULKLTYTLUA&query=food&near=Mountain+View&v=20190302'
 ]
 
