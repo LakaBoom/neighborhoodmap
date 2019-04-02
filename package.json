@@ -2,6 +2,7 @@
   "name": "neighborhoodmap",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://LakaBoom.github.io/neighborhoodmap",
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.8.3",
@@ -12,7 +13,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -25,6 +28,7 @@
   ],
   "devDependencies": {
     "escape-string-regexp": "^1.0.5",
+    "gh-pages": "^2.0.1",
     "google-maps-react": "^2.0.2",
     "sort-by": "^1.2.0",
     "sw-precache": "^5.2.1"
