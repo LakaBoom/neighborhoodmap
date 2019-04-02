@@ -1,6 +1,7 @@
 # Neighborhood Map React project
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This porject can be viewed in this link. https://lakaboom.github.io/neighborhoodmap/
 
 ## Overview
 
